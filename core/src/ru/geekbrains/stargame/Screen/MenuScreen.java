@@ -10,6 +10,7 @@ import ru.geekbrains.stargame.Base.BaseScreen;
 public class MenuScreen extends BaseScreen {
 
     private Texture img;
+    private Texture back;
     private Vector2 touch;
     private Vector2 v;
     private Vector2 pos;
@@ -17,7 +18,8 @@ public class MenuScreen extends BaseScreen {
     @Override
     public void show() {
         super.show();
-        img = new Texture("badlogic.jpg");
+        img = new Texture("7d9.gif");
+        back = new Texture("background.jpg");
         touch = new Vector2();
         v = new Vector2(0.4f, 0.7f);
         pos = new Vector2();
@@ -30,7 +32,8 @@ public class MenuScreen extends BaseScreen {
         Gdx.gl.glClearColor(0.26f, 0.5f, 0.8f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
-        batch.draw(img, pos.x, pos.y);
+        batch.draw(back,0,0);
+        batch.draw(img, pos.x, pos.y, 150,150);
         batch.end();
     }
 
