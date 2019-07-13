@@ -50,25 +50,23 @@ public class MenuScreen extends BaseScreen {
 //            pos.set(touch.x, touch.y);
 //            batch.draw(img, pos.x, pos.y, 150, 150);
 //        }
-        if (Math.toDegrees(Math.acos(pos.cpy().nor().dot(touch.cpy().nor())))!=0) {
-            batch.draw(img, pos.x, pos.y, 150, 150);
-
-        } else if (Math.toDegrees(Math.acos(pos.cpy().nor().dot(touch.cpy().nor())))==0 ) {
-            change.set(0, 0);
-            pos.set(touch.x, touch.y);
-            batch.draw(img, pos.x, pos.y, 150, 150);
-        }
-//        pos.set(Math.round(pos.x),Math.round(pos.y));
-//        if (Math.round(pos.x) != Math.round(touch.x)&&Math.round(pos.y) != Math.round(touch.y)) {
+//        if (Math.toDegrees(Math.acos(pos.cpy().nor().dot(touch.cpy().nor())))!=0) {
 //            batch.draw(img, pos.x, pos.y, 150, 150);
 //
-//        } else if (Math.round(pos.x) == Math.round(touch.x)&&Math.round(pos.y) == Math.round(touch.y)&& Math.toDegrees(Math.acos(pos.cpy().nor().dot(touch.cpy().nor())))==0 ) {
+//        } else if (Math.toDegrees(Math.acos(pos.cpy().nor().dot(touch.cpy().nor())))==0 ) {
 //            change.set(0, 0);
 //            pos.set(touch.x, touch.y);
 //            batch.draw(img, pos.x, pos.y, 150, 150);
 //        }
+       // pos.set(Math.round(pos.x),Math.round(pos.y));
+        if (Math.round(pos.dst2(touch))!=0) {
+            batch.draw(img, pos.x, pos.y, 150, 150);
 
-        System.out.println(pos.x);
+        } else  {
+            change.set(0, 0);
+            pos.set(touch.x, touch.y);
+            batch.draw(img, pos.x, pos.y, 150, 150);
+        }
         batch.end();
     }
 
