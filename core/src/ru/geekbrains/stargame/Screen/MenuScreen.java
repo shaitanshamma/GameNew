@@ -39,7 +39,7 @@ public class MenuScreen extends BaseScreen {
         Gdx.gl.glClearColor(0.26f, 0.5f, 0.8f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
-        if(buf.sub(pos).len()<V_LEN) {
+        if(buf.sub(pos).len()>V_LEN) {
             pos.add(v);
         } else {
             pos.set(touchV);
