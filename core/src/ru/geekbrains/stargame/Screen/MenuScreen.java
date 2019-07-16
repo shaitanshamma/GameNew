@@ -8,15 +8,16 @@ import com.badlogic.gdx.math.Vector2;
 import ru.geekbrains.stargame.Base.BaseScreen;
 
 public class MenuScreen extends BaseScreen {
-
+    private static final float V_LEN = 0.005f;
     private Texture img;
     private Texture back;
     private Vector2 touch;
     private Vector2 v;
-    private Vector2 change;
+   private Vector2 touchV;
     private Vector2 pos;
-    private Vector2 up;
-    private Vector2 down;
+    //    private Vector2 up;
+//    private Vector2 down;
+    private Vector2 buf;
 
     @Override
     public void show() {
@@ -24,49 +25,26 @@ public class MenuScreen extends BaseScreen {
         img = new Texture("7d9.gif");
         back = new Texture("background.jpg");
         touch = new Vector2();
-        change = new Vector2();
+        touchV = new Vector2();
+//        up = new Vector2();
+//        down = new Vector2();
         v = new Vector2();
         pos = new Vector2();
-        up = new Vector2();
-        down = new Vector2();
+        buf = new Vector2();
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
-
-        pos.add(change.nor());
         Gdx.gl.glClearColor(0.26f, 0.5f, 0.8f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
-        down.add(up);
-        batch.draw(back, 0, 0);
-//
-//        if (Math.round(pos.len()) != Math.round(touch.len())) {
-//            batch.draw(img, pos.x, pos.y, 150, 150);
-//
-//        } else if (Math.round(pos.len()) == Math.round(touch.len())&& Math.toDegrees(Math.acos(pos.cpy().nor().dot(touch.cpy().nor())))==0 ) {
-//            change.set(0, 0);
-//            pos.set(touch.x, touch.y);
-//            batch.draw(img, pos.x, pos.y, 150, 150);
-//        }
-//        if (Math.toDegrees(Math.acos(pos.cpy().nor().dot(touch.cpy().nor())))!=0) {
-//            batch.draw(img, pos.x, pos.y, 150, 150);
-//
-//        } else if (Math.toDegrees(Math.acos(pos.cpy().nor().dot(touch.cpy().nor())))==0 ) {
-//            change.set(0, 0);
-//            pos.set(touch.x, touch.y);
-//            batch.draw(img, pos.x, pos.y, 150, 150);
-//        }
-       // pos.set(Math.round(pos.x),Math.round(pos.y));
-        if (Math.round(pos.dst2(touch))!=0) {
-            batch.draw(img, pos.x, pos.y, 150, 150);
-
-        } else  {
-            change.set(0, 0);
-            pos.set(touch.x, touch.y);
-            batch.draw(img, pos.x, pos.y, 150, 150);
+        if(buf.sub(pos).len()<V_LEN) {
+            pos.add(v);
+        } else {
+            pos.set(touchV);
         }
+        batch.draw(img, pos.x, pos.y, 0.2f, 0.2f);
         batch.end();
     }
 
@@ -77,25 +55,25 @@ public class MenuScreen extends BaseScreen {
     }
 
     @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        touch.set(screenX, Gdx.graphics.getHeight() - screenY);
-        change.set(screenX, Gdx.graphics.getHeight() - screenY);
-        change.sub(pos);
+    public boolean touchDown(Vector2 touch, int pointer, int button) {
+        v.set(touch.cpy().sub(pos)).setLength(V_LEN);
+        buf.set(touch);
+        touchV.set(touch);
         return false;
     }
 
     @Override
     public boolean keyDown(int keycode) {
         if (keycode == 19) {
-            change.set(0, 1);
+            v.set(0, V_LEN);
         } else if (keycode == 20) {
-            change.set(0, -1);
+            v.set(0, -V_LEN);
         } else if (keycode == 22) {
-            change.set(1, 0);
+            v.set(V_LEN, 0);
         } else if (keycode == 21) {
-            change.set(-1, 0);
+            v.set(-V_LEN, 0);
         } else if (keycode == 62) {
-            change.set(0, 0);
+            v.set(0, 0);
         }
         return super.keyDown(keycode);
     }
