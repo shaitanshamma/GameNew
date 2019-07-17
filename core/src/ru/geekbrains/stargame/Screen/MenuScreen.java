@@ -13,10 +13,9 @@ public class MenuScreen extends BaseScreen {
     private Texture back;
     private Vector2 touch;
     private Vector2 v;
-   private Vector2 touchV;
+    private Vector2 touchV;
     private Vector2 pos;
-    //    private Vector2 up;
-//    private Vector2 down;
+    private int key;
     private Vector2 buf;
 
     @Override
@@ -26,8 +25,6 @@ public class MenuScreen extends BaseScreen {
         back = new Texture("background.jpg");
         touch = new Vector2();
         touchV = new Vector2();
-//        up = new Vector2();
-//        down = new Vector2();
         v = new Vector2();
         pos = new Vector2();
         buf = new Vector2();
@@ -38,11 +35,13 @@ public class MenuScreen extends BaseScreen {
         super.render(delta);
         Gdx.gl.glClearColor(0.26f, 0.5f, 0.8f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        buf.set(touchV);
         batch.begin();
-        if(buf.sub(pos).len()>V_LEN) {
+        if (buf.sub(pos).len() > V_LEN || keyDown(key)) {
             pos.add(v);
         } else {
             pos.set(touchV);
+            key = 62;
         }
         batch.draw(img, pos.x, pos.y, 0.2f, 0.2f);
         batch.end();
@@ -56,8 +55,7 @@ public class MenuScreen extends BaseScreen {
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer, int button) {
-        v.set(touch.cpy().sub(pos)).setLength(V_LEN);
-        buf.set(touch);
+        v.set(touch.cpy().sub(pos)).setLength(V_LEN * 1.5f);
         touchV.set(touch);
         return false;
     }
@@ -66,15 +64,30 @@ public class MenuScreen extends BaseScreen {
     public boolean keyDown(int keycode) {
         if (keycode == 19) {
             v.set(0, V_LEN);
+            key = keycode;
+            return true;
         } else if (keycode == 20) {
             v.set(0, -V_LEN);
+            key = keycode;
+            return true;
         } else if (keycode == 22) {
             v.set(V_LEN, 0);
+            key = keycode;
+            return true;
         } else if (keycode == 21) {
             v.set(-V_LEN, 0);
+            key = keycode;
+            return true;
         } else if (keycode == 62) {
             v.set(0, 0);
+            key = keycode;
+            return true;
         }
-        return super.keyDown(keycode);
+        return false;
+    }
+
+    public boolean keyDown() {
+
+        return false;
     }
 }
