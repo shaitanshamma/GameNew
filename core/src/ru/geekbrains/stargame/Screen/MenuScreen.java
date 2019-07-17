@@ -39,9 +39,9 @@ public class MenuScreen extends BaseScreen {
         batch.begin();
         if (buf.sub(pos).len() > V_LEN || keyDown(key)) {
             pos.add(v);
+            key=62;
         } else {
             pos.set(touchV);
-            key = 62;
         }
         batch.draw(img, pos.x, pos.y, 0.2f, 0.2f);
         batch.end();
@@ -63,19 +63,19 @@ public class MenuScreen extends BaseScreen {
     @Override
     public boolean keyDown(int keycode) {
         if (keycode == 19) {
-            v.set(0, V_LEN);
+            v.set(0, V_LEN* 1.5f);
             key = keycode;
             return true;
         } else if (keycode == 20) {
-            v.set(0, -V_LEN);
+            v.set(0, -V_LEN* 1.5f);
             key = keycode;
             return true;
         } else if (keycode == 22) {
-            v.set(V_LEN, 0);
+            v.set(V_LEN* 1.5f, 0);
             key = keycode;
             return true;
         } else if (keycode == 21) {
-            v.set(-V_LEN, 0);
+            v.set(-V_LEN* 1.5f, 0);
             key = keycode;
             return true;
         } else if (keycode == 62) {
@@ -83,11 +83,6 @@ public class MenuScreen extends BaseScreen {
             key = keycode;
             return true;
         }
-        return false;
-    }
-
-    public boolean keyDown() {
-
         return false;
     }
 }
