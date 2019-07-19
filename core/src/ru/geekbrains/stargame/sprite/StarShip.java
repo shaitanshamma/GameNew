@@ -1,6 +1,7 @@
 package ru.geekbrains.stargame.sprite;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 
@@ -8,7 +9,7 @@ import ru.geekbrains.stargame.Base.Sprite;
 import ru.geekbrains.stargame.math.Rect;
 
 public class StarShip extends Sprite {
-    private static final float V_LEN = 0.01f;
+    private static final float V_LEN = 0.1f;
     private Vector2 v;
     private Rect worldBounds;
     private Game game;
@@ -28,9 +29,6 @@ public class StarShip extends Sprite {
         endPos = new Vector2();
         v = new Vector2();
         buf = new Vector2();
-        //v.set(Rnd.nextFloat(-0.005f, 0.005f), Rnd.nextFloat(-0.5f, -0.1f));
-       // v.set(0.1f,0.1f);
-     //   v.set(endPos.sub(stpos)).setLength(V_LEN);
         setHeightProportion(0.22f);
     }
 
@@ -43,22 +41,23 @@ public class StarShip extends Sprite {
     @Override
     public void update(float delta) {
         checkBounds();
-        touchDown(endPos, pointer, button);
-       // System.out.println(endPos);
+        buf.set(endPos);
         if (keyDown(key)){
             System.out.println(key + " ryjgrf");
             pos.mulAdd(v, delta);
-        }else {
+        }else if(buf.sub(pos).len2()>V_LEN){
             pos.mulAdd(v,delta);
+         }else {
+            pos.set(endPos);
         }
-
-//        System.out.println(v);
     }
-//
+
     @Override
     public boolean touchDown(Vector2 touch, int pointer, int button) {
+        this.pointer=pointer;
+        this.button = button;
         endPos.set(touch);
-      //  v.set(endPos.sub(stpos)).setLength(V_LEN);
+        v.set(endPos.sub(pos)).setLength(V_LEN);
         return false;
     }
     @Override
@@ -97,13 +96,6 @@ public class StarShip extends Sprite {
 //        if (getLeft() > worldBounds.getRight()) setRight(worldBounds.getLeft());
 //        if (getTop() < worldBounds.getBottom()) setBottom(worldBounds.getTop());
 //
-//        buf.set(endPos);
-//       // System.out.println(endPos);
-//        if (buf.sub(pos).len() > V_LEN) {
-//            pos.add(v);
-//        } else {
-//            pos.set(endPos);
-//        }
     }
 }
 

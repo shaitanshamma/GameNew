@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 
 import ru.geekbrains.stargame.Base.BaseScreen;
 import ru.geekbrains.stargame.math.Rect;
@@ -79,5 +80,23 @@ public class GameScreen extends BaseScreen {
         }
         ship.draw(batch);
         batch.end();
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        ship.keyDown(keycode);
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(Vector2 touch, int pointer, int button) {
+        ship.touchUp(touch,pointer,button);
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(Vector2 touch, int pointer, int button) {
+        ship.touchDown(touch,pointer,button);
+        return false;
     }
 }
