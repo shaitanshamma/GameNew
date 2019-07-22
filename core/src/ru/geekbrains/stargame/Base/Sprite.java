@@ -6,21 +6,26 @@ import com.badlogic.gdx.math.Vector2;
 
 import ru.geekbrains.stargame.math.MatrixUtils;
 import ru.geekbrains.stargame.math.Rect;
+import ru.geekbrains.stargame.utils.Regions;
 
 public abstract class Sprite extends Rect {
 
     protected float angle;
-    public Vector2 touch;
-    protected Vector2 start;
     protected float scale = 1f;
     protected TextureRegion[] regions;
     protected int frame;
+    private boolean destroyed;
 
+    public Sprite() {
+    }
 
     public Sprite(TextureRegion region) {
         this.regions = new TextureRegion[1];
         this.regions[0] = region;
-        setHeightProportion(0.3f);
+    }
+
+    public Sprite(TextureRegion region, int rows, int cols, int frames) {
+        this.regions = Regions.split(region, rows, cols, frames);
     }
 
     public void setHeightProportion(float height) {
@@ -45,26 +50,14 @@ public abstract class Sprite extends Rect {
                 getWidth(), getHeight(),
                 scale, scale,
                 angle
-//                regions[frame],
-//                getLeft(), getBottom(),
-//                halfWidth, halfHeight,
-//                getWidth(), getHeight(),
-//                scale, scale,
-//                angle
         );
     }
 
     public boolean touchDown(Vector2 touch, int pointer, int button) {
-            this.touch=touch;
         return false;
     }
 
     public boolean touchUp(Vector2 touch, int pointer, int button) {
-        return false;
-    }
-
-    public boolean keyDown(int keycode) {
-        System.out.println("keyDown keycode = " + keycode);
         return false;
     }
 
@@ -83,4 +76,17 @@ public abstract class Sprite extends Rect {
     public void setScale(float scale) {
         this.scale = scale;
     }
+
+    public void destroy() {
+        destroyed = true;
+    }
+
+    public void flushDestroy() {
+        destroyed = false;
+    }
+
+    public boolean isDestroyed() {
+        return destroyed;
+    }
 }
+

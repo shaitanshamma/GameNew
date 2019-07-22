@@ -2,6 +2,7 @@ package ru.geekbrains.stargame.Screen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -13,36 +14,42 @@ import ru.geekbrains.stargame.math.Rect;
 import ru.geekbrains.stargame.sprite.Background;
 import ru.geekbrains.stargame.sprite.Star;
 import ru.geekbrains.stargame.sprite.StarShip;
+import ru.geekbrains.stargame.pool.*;
 
 public class GameScreen extends BaseScreen {
 
-    private static final int STAR_COUNT = 64;
-
+    private static final int STAR_COUNT = 32;
+    private Music music;
     private TextureAtlas atlas;
     private Texture bg;
     private Background background;
-    private StarShip ship;
-    private Game game;
+
+    private BulletPool bulletPool;
 
     private Star[] starArray;
+    private StarShip mainShip;
 
     @Override
     public void show() {
         super.show();
         atlas = new TextureAtlas("textures/mainAtlas.tpack");
         bg = new Texture("back.jpg");
-        ship = new StarShip(atlas, game);
         background = new Background(new TextureRegion(bg));
         starArray = new Star[STAR_COUNT];
         for (int i = 0; i < STAR_COUNT; i++) {
             starArray[i] = new Star(atlas);
         }
+        music = Gdx.audio.newMusic(Gdx.files.internal("sounds/music.mp3"));
+        bulletPool = new BulletPool();
+        mainShip = new StarShip(atlas, bulletPool);
+        music.play();
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
         update(delta);
+        freeAllDestroyedActiveSprites();
         draw();
     }
 
@@ -53,21 +60,51 @@ public class GameScreen extends BaseScreen {
         for (Star star:starArray) {
             star.resize(worldBounds);
         }
-        ship.resize(worldBounds);
+        mainShip.resize(worldBounds);
     }
 
     @Override
     public void dispose() {
         atlas.dispose();
         bg.dispose();
+        bulletPool.dispose();
         super.dispose();
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        mainShip.keyDown(keycode);
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        mainShip.keyUp(keycode);
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(Vector2 touch, int pointer, int button) {
+        mainShip.touchDown(touch, pointer, button);
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(Vector2 touch, int pointer, int button) {
+        mainShip.touchUp(touch, pointer, button);
+        return false;
     }
 
     private void update(float delta) {
         for (Star star:starArray) {
             star.update(delta);
         }
-       ship.update(delta);
+        bulletPool.updateActiveSprites(delta);
+        mainShip.update(delta);
+    }
+
+    private void freeAllDestroyedActiveSprites() {
+        bulletPool.freeAllDestroyedActiveSprites();
     }
 
     private void draw() {
@@ -78,25 +115,9 @@ public class GameScreen extends BaseScreen {
         for (Star star:starArray) {
             star.draw(batch);
         }
-        ship.draw(batch);
+        mainShip.draw(batch);
+        bulletPool.drawActiveSprites(batch);
         batch.end();
     }
 
-    @Override
-    public boolean keyDown(int keycode) {
-        ship.keyDown(keycode);
-        return false;
-    }
-
-    @Override
-    public boolean touchUp(Vector2 touch, int pointer, int button) {
-        ship.touchUp(touch,pointer,button);
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(Vector2 touch, int pointer, int button) {
-        ship.touchDown(touch,pointer,button);
-        return false;
-    }
 }
