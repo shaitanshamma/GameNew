@@ -42,6 +42,7 @@ public class GameScreen extends BaseScreen {
         music = Gdx.audio.newMusic(Gdx.files.internal("sounds/music.mp3"));
         bulletPool = new BulletPool();
         mainShip = new StarShip(atlas, bulletPool);
+        music.setPosition(MenuScreen.musicPos);
         music.play();
     }
 

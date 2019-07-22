@@ -1,7 +1,9 @@
 package ru.geekbrains.stargame.sprite;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -12,6 +14,8 @@ import ru.geekbrains.stargame.math.Rect;
 import ru.geekbrains.stargame.pool.*;
 
 public class StarShip extends Sprite {
+
+    private Sound bulletSound;
 
     private static final int INVALID_POINTER = -1;
 
@@ -38,6 +42,7 @@ public class StarShip extends Sprite {
         bulletRegion = atlas.findRegion("bulletMainShip");
         this.bulletPool = bulletPool;
         reloadInterval = 0.2f;
+        bulletSound = Gdx.audio.newSound(Gdx.files.internal("sounds/bullet.wav"));
     }
 
     @Override
@@ -157,5 +162,6 @@ public class StarShip extends Sprite {
     private void shoot() {
         Bullet bullet = bulletPool.obtain();
         bullet.set(this, bulletRegion, pos, bulletV, 0.01f, worldBounds, 1);
+        bulletSound.play(0.1f);
     }
 }

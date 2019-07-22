@@ -52,6 +52,7 @@
             buttonExit = new ButtonExit(atlas);
             buttonPlay = new ButtonPlay(atlas, game);
             music.play();
+            System.out.println(music.getPosition());
         }
 
         @Override
@@ -112,7 +113,4 @@
             batch.end();
         }
 
-        public float getMusicPos() {
-            return musicPos;
-        }
     }
