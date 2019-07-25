@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
-import ru.geekbrains.stargame.math.MatrixUtils;
 import ru.geekbrains.stargame.math.Rect;
 import ru.geekbrains.stargame.utils.Regions;
 
@@ -53,6 +52,9 @@ public abstract class Sprite extends Rect {
         );
     }
 
+    public void dispose() {
+    }
+
     public boolean touchDown(Vector2 touch, int pointer, int button) {
         return false;
     }
@@ -89,4 +91,3 @@ public abstract class Sprite extends Rect {
         return destroyed;
     }
 }
-
