@@ -22,7 +22,6 @@
 
         private Sound sound;
         private Music music;
-        public static  float musicPos;
         private Game game;
 
         private TextureAtlas atlas;
@@ -52,7 +51,6 @@
             buttonExit = new ButtonExit(atlas);
             buttonPlay = new ButtonPlay(atlas, game);
             music.play();
-            System.out.println(music.getPosition());
         }
 
         @Override
