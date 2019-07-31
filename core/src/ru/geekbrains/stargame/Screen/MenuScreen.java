@@ -33,7 +33,8 @@
         private ButtonPlay buttonPlay;
 
         public MenuScreen(Game game) {
-            this.game = game;
+           this.game = game;
+           game.setScreen(this);
         }
 
         @Override

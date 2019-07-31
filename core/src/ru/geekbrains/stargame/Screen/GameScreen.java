@@ -49,8 +49,9 @@ public class GameScreen extends BaseScreen {
     private Music music;
     private Sound explosionSound;
     Game game;
+    GameScreen gameScreen;
 
-    private State state;
+    public State state;
     private State stateBuff;
 
     @Override
@@ -61,7 +62,7 @@ public class GameScreen extends BaseScreen {
         atlas = new TextureAtlas("textures/mainAtlas.tpack");
         bg = new Texture("back.jpg");
         gameOver = new Gameover(atlas);
-        new_game = new New_Game(atlas);
+        new_game = new New_Game(atlas,this);
         background = new Background(new TextureRegion(bg));
         starArray = new Star[STAR_COUNT];
         for (int i = 0; i < STAR_COUNT; i++) {
@@ -259,5 +260,8 @@ public class GameScreen extends BaseScreen {
         state = stateBuff;
         music.play();
     }
-
+    public void setNew_game(){
+        state = State.PLAYING;
+        mainShip.setNew();
+    }
 }

@@ -154,4 +154,9 @@ public class MainShip extends Ship {
         v.setZero();
     }
 
+    public void setNew(){
+        this.hp = 10;
+        pos.x = worldBounds.pos.x;
+    }
+
 }
