@@ -63,9 +63,9 @@ public class EnemyGenerator {
     }
 
     public void generate(float delta, int frags) {
-        level = frags / 10 + 1;
+        level = frags / 10+ 1;
         generateTimer += delta;
-        if (generateTimer >= generateInterval) {
+        if (generateTimer >= generateInterval/level) {
             generateTimer = 0f;
             Enemy enemy = enemyPool.obtain();
             float type = (float) Math.random();
