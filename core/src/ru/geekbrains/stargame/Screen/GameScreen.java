@@ -95,7 +95,7 @@ public class GameScreen extends BaseScreen {
         stateBuff = State.PLAYING;
         messageGameOver = new Gameover(atlas);
         buttonNewGame = new New_Game (atlas, game);
-        font = new Font("font/font.fnt", "font/font.png");
+        font = new Font("font/fontnew.fnt", "font/fontnew.png");
         font.setSize(0.03f);
         sbFrags = new StringBuilder();
         sbHp = new StringBuilder();

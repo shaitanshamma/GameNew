@@ -11,7 +11,6 @@ import ru.geekbrains.stargame.math.Rect;
 
 public class New_Game extends ScaledTouchUpButton {
     Game game;
-    MenuScreen menuScreen;
 
     public New_Game(TextureAtlas atlas, Game game) {
         super(atlas.findRegion("button_new_game"));
