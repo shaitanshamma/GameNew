@@ -22,7 +22,6 @@
 
         private Sound sound;
         private Music music;
-        public static  float musicPos;
         private Game game;
 
         private TextureAtlas atlas;
@@ -34,7 +33,8 @@
         private ButtonPlay buttonPlay;
 
         public MenuScreen(Game game) {
-            this.game = game;
+           this.game = game;
+           game.setScreen(this);
         }
 
         @Override
@@ -52,7 +52,6 @@
             buttonExit = new ButtonExit(atlas);
             buttonPlay = new ButtonPlay(atlas, game);
             music.play();
-            System.out.println(music.getPosition());
         }
 
         @Override
