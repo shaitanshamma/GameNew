@@ -10,12 +10,11 @@ import ru.geekbrains.stargame.StarGame;
 import ru.geekbrains.stargame.math.Rect;
 
 public class New_Game extends ScaledTouchUpButton {
-    GameScreen gameScreen;
-    MenuScreen menuScreen;
+    Game game;
 
-    public New_Game(TextureAtlas atlas, GameScreen gameScreen) {
+    public New_Game(TextureAtlas atlas, Game game) {
         super(atlas.findRegion("button_new_game"));
-        this.gameScreen = gameScreen;
+        this.game = game;
     }
 
     @Override
@@ -26,13 +25,6 @@ public class New_Game extends ScaledTouchUpButton {
 
     @Override
     public void action() {
-        //gameScreen.dispose();
-//        menuScreen = new MenuScreen(new Game() {
-//            @Override
-//            public void create() {
-//                setScreen(this.screen);
-//            }
-//        });
-        gameScreen.setNew_game();
+        game.setScreen(new MenuScreen(game));
     }
 }

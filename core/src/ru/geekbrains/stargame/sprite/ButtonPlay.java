@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 import ru.geekbrains.stargame.Base.ScaledTouchUpButton;
+import ru.geekbrains.stargame.Screen.MenuScreen;
 import ru.geekbrains.stargame.math.Rect;
 import ru.geekbrains.stargame.Screen.GameScreen;
 
@@ -25,6 +26,6 @@ public class ButtonPlay extends ScaledTouchUpButton {
 
     @Override
     public void action() {
-        game.setScreen(new GameScreen());
+        game.setScreen(new GameScreen(game));
     }
 }
